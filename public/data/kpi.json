@@ -1,0 +1,28 @@
+{
+  "recoveryJobs": 178,
+  "fullyPrioritized": 87,
+  "jobsWithVesselCandidates": 176,
+  "candidateVesselMatches": 8579,
+  "historicalVesselCoveragePct": 98.9,
+  "avgCandidatesPerJob": 48.7,
+  "medianCandidatesPerJob": 40.5,
+  "bestMatchNotNearestPct": 35.4,
+  "sensitivityScenariosTested": 81,
+  "medianSpearman": 0.9699,
+  "minSpearman": 0.9196,
+  "topJobStableScenarios": 81,
+  "uniqueCandidateVessels": 1780,
+  "medianBestVesselDistanceKm": 0.876,
+  "meanBestVesselDistanceKm": 1.408,
+  "highestFinalPriorityJob": "KR-00394",
+  "highestFinalPriorityScore": 0.5559,
+  "environmentalPriorityScoredJobs": 88,
+  "finalPriorityDistribution": {
+    "NOT_SCORED": 91,
+    "MEDIUM": 47,
+    "HIGH": 16,
+    "VERY_HIGH": 4,
+    "LOW": 19,
+    "VERY_LOW": 1
+  }
+}
