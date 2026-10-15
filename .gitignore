@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local operational records (never commit)
+/.netback/
+
+# Agent skill tooling (auto-installed, not application source)
+/.claude/
+/.agents/
+skills-lock.json
+
+# Python
+__pycache__/
+*.pyc

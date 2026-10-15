@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NETBACK
 
-## Getting Started
+Ghost gear recovery coordination research prototype. Next.js 16 / React 19.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+npm install
+npm run dev -- --hostname 127.0.0.1 --port 4177
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://127.0.0.1:4177. The first build downloads the existing Geist fonts from Google. Map tiles require an internet connection. The planning calculations use bundled research data and do not call an AI service.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` — mission and research introduction
+- `/lab` — interactive allocation, budget and capacity scenarios
+- `/simulate` — guided recovery workflow
+- `/simulate/custom` — new-coordinate spatial analysis
+- `/admin` — historical records and simulated mission history
 
-## Learn More
+## Simulation lab
 
-To learn more about Next.js, take a look at the following resources:
+Choose a preset, region and objective. Change budget, mission count, maximum depth, historical track distance, minimum tonnage and hypothetical weather conditions. Expand **Cost & matching assumptions** to adjust speed, time, operating rates, fuel price, mobilization and matching weights.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Capture baseline** keeps a comparison in the current page session. **Export CSV** includes all assumptions, planned/deferred records, costs and excluded vessel IDs. Open a proposed job to inspect its cost breakdown or exclude its vessel across the campaign. **Reset** restores default assumptions and vessel availability; use **Clear baseline** to remove the captured comparison.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Interpretation
 
-## Deploy on Vercel
+- 178 historical recovery records and 8,579 historical candidate links are supplied in `public/data`.
+- Records and tracks can represent different periods. The lab is a counterfactual spatial exercise, not real-time dispatch or an evaluation of observed missions.
+- Qualification and availability are explicit assumptions. Vessel tonnage does not establish suitable equipment or competence.
+- Filters are applied before a greedy, affordable allocation. One vessel is assigned to at most one job in a planning window. This is not a global routing optimizer.
+- Costs, weather multipliers and fuel coefficients are uncalibrated scenario assumptions. The displayed ±25% range is a cost sensitivity band, not a statistical confidence interval.
+- Travel uses twice the nearest historical track distance as a detour proxy. It is not a safe navigable route or departure-port distance.
+- The priority index is relative, not recovered mass, ecological impact or probability of success.
+- Guided workflow events are simulations held in browser storage. The lab itself does not create dispatch missions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The implementation and equations are in `lib/planner.ts`; model details are also shown below the allocation list.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Custom spatial analysis
+
+The existing Python engine expects the original `Data` folder next to `web`, with the MPA CSV, vessel-track CSV and GEBCO raster. It requires `pyproj`, `shapely`, and `rasterio` in the `python3` environment. The API validates the study coverage (32–40° N, 124–133° E), rejects invalid input and terminates analysis after 25 seconds. This path uses historical data as well.
+
+## Checks
+
+```sh
+npm run lint
+npx tsc --noEmit
+node tests/planner.test.mjs
+npm run build -- --webpack
+```
+
+## Photo credit
+
+Homepage photograph: NOAA / Ariel Halperin, 2021. Reused from the NETBACK research document asset (`recovery_noaa.jpg`). It illustrates ghost gear recovery and is not evidence of a NETBACK operation.
