@@ -28,7 +28,6 @@ export function FieldStory() {
   return (
     <section className="field-story-section">
       <div className="field-story-intro">
-        <p className="dock-kicker">{t("story.kicker").toUpperCase()}</p>
         <h2>{t("story.title")}</h2>
         <p className="field-story-lead">{t("story.lead")}</p>
         <p>{t("story.body1")}</p>

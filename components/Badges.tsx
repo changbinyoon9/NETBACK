@@ -19,9 +19,24 @@ const PRIORITY_KEYS: Record<string, string> = {
   NOT_SCORED: "priority.notScored",
 };
 
-export function PriorityBadge({ cls }: { cls: string | null | undefined }) {
+const PRIORITY_TAPE_STYLES: Record<string, string> = {
+  VERY_HIGH: "priority-tape-very-high",
+  HIGH: "priority-tape-high",
+  MEDIUM: "priority-tape-medium",
+  LOW: "priority-tape-low",
+  NOT_SCORED: "priority-tape-not-scored",
+};
+
+export function PriorityBadge({ cls, variant = "pill" }: { cls: string | null | undefined; variant?: "pill" | "tape" }) {
   const t = useT();
   const key = cls || "NOT_SCORED";
+  if (variant === "tape") {
+    return (
+      <span className={clsx("priority-tape", PRIORITY_TAPE_STYLES[key] ?? PRIORITY_TAPE_STYLES.NOT_SCORED)}>
+        {t(PRIORITY_KEYS[key] ?? "priority.notScored")}
+      </span>
+    );
+  }
   return (
     <span
       className={clsx(

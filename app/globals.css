@@ -309,6 +309,12 @@ h1 em,h2 em {font-family:Georgia,"Times New Roman",serif;font-weight:400;}
 .fieldbook-disclaimer p{font-size:10px;line-height:1.8;color:#53654f}
 .fieldbook-map{position:relative;background:#f6f3e8;border:1px solid #173d354f;padding:25px 20px 17px;box-shadow:9px 10px 0 #bac7b04d;transform:rotate(1.5deg);align-self:center}
 .map-tape{position:absolute;top:-17px;left:50%;transform:translateX(-50%) rotate(-3deg);background:#e7b978ed;padding:11px 25px;font-family:monospace;font-size:8px;letter-spacing:.8px;white-space:nowrap;clip-path:polygon(1% 0,100% 3%,98% 100%,0 97%)}
+.priority-tape{display:inline-block;padding:5px 12px;font-family:monospace;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#173d35;clip-path:polygon(1% 0,100% 6%,97% 100%,0 94%);transform:rotate(-2deg);white-space:nowrap;box-shadow:1px 2px 0 #173d3522;flex-shrink:0}
+.priority-tape-very-high{background:#e8a194e6}
+.priority-tape-high{background:#eab978e6}
+.priority-tape-medium{background:#e3cd8ae6}
+.priority-tape-low{background:#a9c4c9e6}
+.priority-tape-not-scored{background:#c9c9bde6}
 .fieldbook-map-title{display:flex;justify-content:space-between;gap:14px;padding:8px 0 20px;font-size:16px;letter-spacing:-.4px}
 .fieldbook-map-title span:last-child{font-size:9px;font-family:monospace;letter-spacing:1px;align-self:center}
 .fieldbook-map .rounded-xl{border-radius:0}

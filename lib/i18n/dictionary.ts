@@ -8,7 +8,6 @@ export const LOCALES: Locale[] = ["en", "ko"];
 // than silently rendering blank.
 export const dictionary: Record<Locale, Record<string, string>> = {
   en: {
-    "story.kicker": "Before the code, the water",
     "story.title": "Why I went into the water",
     "story.lead": "It started with a single fish, dead and still tangled in a net.",
     "story.body1": "For the past year I've been a member of Arc-Saver, a volunteer marine-cleanup crew based at Sinchang Harbor and Biyang Island, Jeju — scuba diving to recover abandoned nets and rope from the seafloor myself.",
@@ -922,8 +921,7 @@ export const dictionary: Record<Locale, Record<string, string>> = {
     "reason.budgetTooLow": "Remaining budget too low",
   },
   ko: {
-    "story.kicker": "코드보다 먼저, 바다",
-    "story.title": "바다에 들어간 이유",
+    "story.title": "바다로 들어간 이유",
     "story.lead": "그물에 걸린 채 죽어 있던 물고기 한 마리에서 시작했습니다.",
     "story.body1": "저는 지난 1년간 제주 신창항과 비양도를 중심으로 활동하는 해양정화 봉사동아리 Arc-Saver 소속으로, 직접 스쿠버다이빙을 하며 바닷속 폐그물과 로프를 수거해왔습니다.",
     "story.body2": "어느 날 해양 정화 중, 버려진 그물에 걸린 채 빠져나오지 못하고 죽어 있는 물고기를 발견했습니다. 그 순간 폐어구는 단순히 바다에 버려진 쓰레기가 아니라, 수거되기 전까지 계속해서 해양생물을 위협하는 문제라는 것을 직접 체감했습니다.",

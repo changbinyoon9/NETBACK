@@ -38,7 +38,7 @@ export default function SimulatePage() {
                       <span className="text-xs font-bold tracking-wide text-cyan uppercase">
                         {t("sim.scenario")} {key}
                       </span>
-                      <PriorityBadge cls={s.job.finalPriorityClass} />
+                      <PriorityBadge cls={s.job.finalPriorityClass} variant="tape" />
                     </div>
                     <h2 className="mt-2 text-lg font-semibold text-navy">{t(`sim.tag.${key}`)}</h2>
                     <p className="mt-1 font-mono text-sm text-ink-soft">{s.job_id}</p>
