@@ -325,9 +325,11 @@ h1 em,h2 em {font-family:Georgia,"Times New Roman",serif;font-weight:400;}
 .field-story-feature-media{position:relative;width:100%;aspect-ratio:9/10;background:#d9e2d0;box-shadow:9px 10px 0 #bac7b04d;overflow:hidden}
 .field-story-feature-caption{font-size:10px;color:#7a8b76;margin-top:12px;line-height:1.7;max-width:360px}
 .field-story-gallery{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;align-content:start;margin-top:10px}
-.field-story-photo{position:relative;aspect-ratio:3/4;overflow:hidden;background:#d9e2d0}
+.field-story-photo{position:relative;aspect-ratio:3/4;overflow:hidden;background:#d9e2d0;display:block;width:100%;padding:0;border:2px solid transparent;cursor:pointer}
 .field-story-photo img{transition:transform .4s ease}
 .field-story-photo:hover img{transform:scale(1.06)}
+.field-story-photo.selected{border-color:#e86f45}
+.field-story-photo:focus-visible{outline:2px solid #e86f45;outline-offset:2px}
 .field-story-credit{grid-column:1/-1;font-size:9px;color:#95a391;margin-top:22px;border-top:1px solid #173d3522;padding-top:16px}
 .all-hands-section{padding:80px 5%;display:flex;align-items:center;justify-content:center;gap:42px;position:relative;overflow:hidden}
 .all-hands-knot{width:170px;height:170px;flex-shrink:0;transform:rotate(-14deg);color:#173d35}

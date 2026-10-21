@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useT, useLocale } from "@/lib/i18n/LocaleProvider";
 
-const FEATURE = { src: "/images/story/changbin-net-shore.jpg", alt: { en: "Holding up a recovered net sack on the rocks at Sinchang Harbor", ko: "신창항 방파제에서 직접 건져 올린 폐어망 자루를 들어 보이는 모습" } };
-
 const GALLERY: { src: string; alt: { en: string; ko: string } }[] = [
+  { src: "/images/story/changbin-net-shore.jpg", alt: { en: "Holding up a recovered net sack on the rocks at Sinchang Harbor", ko: "신창항 방파제에서 직접 건져 올린 폐어망 자루를 들어 보이는 모습" } },
   { src: "/images/story/changbin-descent.jpg", alt: { en: "Suiting up with scuba gear, about to descend the harbor steps", ko: "스쿠버 장비를 메고 방파제 계단을 내려가는 모습" } },
   { src: "/images/story/changbin-gearup.jpg", alt: { en: "Gearing up before a recovery dive", ko: "회수 다이빙 전 장비를 점검하는 모습" } },
   { src: "/images/story/team-briefing.jpg", alt: { en: "Arc-Saver crew briefed alongside local fishermen before a dive", ko: "다이빙 전 지역 어민들과 함께 브리핑을 받는 Arc-Saver 단원들" } },
@@ -22,6 +22,8 @@ const GALLERY: { src: string; alt: { en: string; ko: string } }[] = [
 export function FieldStory() {
   const t = useT();
   const { locale } = useLocale();
+  const [selected, setSelected] = useState(0);
+  const feature = GALLERY[selected];
 
   return (
     <section className="field-story-section">
@@ -38,16 +40,23 @@ export function FieldStory() {
 
       <div className="field-story-feature">
         <div className="field-story-feature-media">
-          <Image src={FEATURE.src} alt={locale === "ko" ? FEATURE.alt.ko : FEATURE.alt.en} fill sizes="(max-width: 800px) 90vw, 45vw" className="object-cover" priority />
+          <Image key={feature.src} src={feature.src} alt={locale === "ko" ? feature.alt.ko : feature.alt.en} fill sizes="(max-width: 800px) 90vw, 45vw" className="object-cover" priority />
         </div>
-        <p className="field-story-feature-caption">{t("story.feature.caption")}</p>
+        <p className="field-story-feature-caption">{locale === "ko" ? feature.alt.ko : feature.alt.en}</p>
       </div>
 
       <div className="field-story-gallery">
-        {GALLERY.map((photo) => (
-          <div className="field-story-photo" key={photo.src}>
-            <Image src={photo.src} alt={locale === "ko" ? photo.alt.ko : photo.alt.en} fill sizes="(max-width: 800px) 45vw, 23vw" className="object-cover" />
-          </div>
+        {GALLERY.map((photo, i) => (
+          <button
+            type="button"
+            className={`field-story-photo ${i === selected ? "selected" : ""}`}
+            key={photo.src}
+            onClick={() => setSelected(i)}
+            aria-pressed={i === selected}
+            aria-label={locale === "ko" ? photo.alt.ko : photo.alt.en}
+          >
+            <Image src={photo.src} alt="" fill sizes="(max-width: 800px) 45vw, 23vw" className="object-cover" />
+          </button>
         ))}
       </div>
 
