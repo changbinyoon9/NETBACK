@@ -25,7 +25,6 @@ export const dictionary: Record<Locale, Record<string, string>> = {
     "record.confirm": "I checked the evidence and category. Only field-confirmed records enter impact statistics.",
     "record.save": "Save category",
 
-    "service.title": "Start with what you need.",
     "service.report.title": "Report lost gear",
     "service.report.body": "Share the location and what you found.",
     "service.plan.title": "Compare recovery plans",
@@ -940,7 +939,6 @@ export const dictionary: Record<Locale, Record<string, string>> = {
     "record.confirm": "회수 증빙과 기록 구분을 확인했습니다. 현장 확인 완료 건만 실적에 반영합니다.",
     "record.save": "집계 구분 저장",
 
-    "service.title": "필요한 서비스, 바로 시작하세요",
     "service.report.title": "폐어구 신고",
     "service.report.body": "발견 위치와 어구 정보를 남겨주세요.",
     "service.plan.title": "회수 계획 비교",
