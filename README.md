@@ -1,19 +1,37 @@
 # NETBACK
 
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Postgres](https://img.shields.io/badge/Neon-Postgres-00E599?logo=postgresql&logoColor=white)
+![Vercel](https://img.shields.io/badge/deployed-Vercel-black?logo=vercel&logoColor=white)
+![i18n](https://img.shields.io/badge/i18n-KO%20%2F%20EN-ea580c)
+
 NETBACK is a web app for coordinating ghost-gear recovery along the Korean coast — from a public "I found abandoned fishing gear here" report, through priority scoring and vessel matching, to a recorded recovery outcome and (if applicable) buyback compensation.
 
+![Homepage](docs/screenshots/home.jpg)
+
 I started building this after a cleanup dive with Arc-Saver (a volunteer marine-cleanup crew based at Sinchang Harbor and Biyang Island, Jeju) where we found a fish that had died tangled in an abandoned net. After the dive there was no real way to record what we'd found, where, or what happened to it afterward — that's the gap this project tries to close.
+
+<img src="public/images/story/changbin-net-shore.jpg" alt="Holding up a recovered net sack at Sinchang Harbor" width="420" />
 
 Live: https://netback-app.vercel.app
 
 ## What's actually in here
 
 - **Public report flow** (`/report`) — map location picker, "use my current location", gear type, an optional photo (auto-compressed client-side, with an experimental net/not-net classifier via a hosted Roboflow model), and a status page to check on a submitted report later.
+
+  <img src="docs/screenshots/report-form.jpg" alt="Report form" width="520" />
+
 - **Recovery priority engine** — scores a location on gear hazard, protected-area proximity, and seabed depth recoverability, then matches it against a fleet of candidate vessels by distance, tonnage and working limits. The live version (`lib/liveEngine/`) is a TypeScript port of an earlier Python prototype (`scripts/analyze_report.py`), rewritten so it can actually run on Vercel instead of shelling out to a Python process.
 - **Admin operations dashboard** (`/admin/operations`, password-gated) — review a report, match it to a vessel, record the recovery outcome, classify it as a real field recovery vs. a test record, and log buyback compensation (rate × recovered weight, with request/approve/paid states).
 - **GIS + impact page** (`/admin/gis`) — a density heatmap built from 178 historical recovery records, overlaid with confirmed field recoveries, plus aggregate stats (weight recovered, compensation paid, % near a protected area) computed live from the spatial engine.
 - **Simulation lab** (`/lab`, `/simulate`) — a counterfactual planning tool over the historical dataset: change budget, fleet size, weather assumptions, etc. and see how the recommended allocation changes. Not real-time dispatch, just a what-if exercise.
+
+  <img src="docs/screenshots/simulate.jpg" alt="Scenario comparison cards" width="520" />
+
 - Full Korean/English UI (`lib/i18n`), mobile layout, PWA manifest.
+
+  <img src="docs/screenshots/story.jpg" alt="Homepage story section" width="520" />
 
 ## Data
 
