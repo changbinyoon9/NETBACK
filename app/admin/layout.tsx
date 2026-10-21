@@ -11,6 +11,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin/operations", label: t("admin.tab.operations") },
     { href: "/admin", label: t("admin.tab.overview") },
     { href: "/admin/analytics", label: t("admin.tab.analytics") },
+    { href: "/admin/gis", label: t("admin.tab.gis") },
     { href: "/admin/business", label: t("admin.tab.business") },
   ];
   return (

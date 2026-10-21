@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import ts from 'typescript';
 import Module from 'node:module';
 const mod=new Module('operations');mod._compile(ts.transpileModule(fs.readFileSync('lib/operations/model.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,'operations.cjs');
-const {applyCommand,demoState,emptyState,matchFleet,nextDemoCommand}=mod.exports;
+const {applyCommand,demoState,emptyState,matchFleet,nextDemoCommand,isFieldRecovery}=mod.exports;
 let passed=0;const test=(name,fn)=>{fn();passed++;console.log('PASS '+name);};
 let tick=0;const run=(s,c)=>applyCommand(s,c,{now:new Date(1760000000000+tick++*1000).toISOString(),id:'QA-'+tick});
 const next=(s,rough=false,result='Recovered')=>run(s,nextDemoCommand(s.reports[0],s,rough,result));
@@ -19,4 +19,5 @@ test('invalid coordinates, nulls, missing actor and unconfirmed capabilities rej
 test('failed outcome cannot claim material and evidence is required',()=>{let s=next(next(next(demoState())));let c=nextDemoCommand(s.reports[0],s,false,'Failed');assert.throws(()=>run(s,{...c,values:{...c.values,weight:10}}),/zero recovered/);assert.throws(()=>run(s,{...c,values:{...c.values,evidence:''}}),/Evidence/);});
 test('zero budget and depth restrictions yield no eligible crew',()=>{let s=next(demoState());s=run(s,cmd(s,'review',{...s.reports[0].review,budget:0,locationChecked:true}));assert(matchFleet(s,s.reports[0]).every(m=>!m.eligible));});
 test('operations starts empty and cannot contain demo by default',()=>{assert.deepEqual(emptyState(),{schema:1,reports:[],vessels:[]});});
+test('only confirmed field recoveries enter impact statistics',()=>{let s=demoState();for(let i=0;i<5;i++)s=next(s);assert.equal(isFieldRecovery(s.reports[0]),false);assert.throws(()=>run(s,cmd(s,'classifyRecord',{recordKind:'FIELD',note:'Checked'})),/Confirm/);s=run(s,cmd(s,'classifyRecord',{recordKind:'EXERCISE',confirmed:true,note:'Training record'}));assert.equal(isFieldRecovery(s.reports[0]),false);s=run(s,cmd(s,'classifyRecord',{recordKind:'FIELD',confirmed:true,note:'Evidence checked'}));assert.equal(isFieldRecovery(s.reports[0]),true);assert.equal(isFieldRecovery({...s.reports[0],stage:'RETURNED'}),false);assert.equal(isFieldRecovery({...s.reports[0],outcome:{...s.reports[0].outcome,result:'Failed',weight:0}}),false);assert.throws(()=>run(demoState(),cmd(demoState(),'classifyRecord',{recordKind:'FIELD',confirmed:true,note:'Premature'})),/current stage/);});
 console.log(`${passed} operational workflow tests passed.`);

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ServiceFaq } from "@/components/ServiceAccess";
 import { Nav } from "@/components/Nav";
 import { useT } from "@/lib/i18n/LocaleProvider";
 
@@ -32,10 +33,11 @@ export default function HowItWorks() {
             ))}
           </ol>
 
-          <div className="mt-10 rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
-            <p className="font-semibold">{t("how.disclaimer.title")}</p>
+          <details className="mt-10 border-y border-border py-5 text-sm text-ink-soft">
+            <summary className="cursor-pointer font-semibold text-navy">{t("how.disclaimer.title")}</summary>
             <p className="mt-1">{t("how.disclaimer.body")}</p>
-          </div>
+          </details>
+          <ServiceFaq />
 
           <Link
             href="/simulate"

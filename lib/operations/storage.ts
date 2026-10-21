@@ -17,6 +17,7 @@ function toReport(row: Record<string, unknown>): Report {
     review: (row.review as Report["review"]) ?? undefined,
     assignment: (row.assignment as Report["assignment"]) ?? undefined,
     outcome: (row.outcome as Report["outcome"]) ?? undefined,
+    compensation: (row.compensation as Report["compensation"]) ?? undefined,
     history: row.history as Report["history"],
   };
 }
@@ -64,8 +65,8 @@ async function insertReport(pool: ReturnType<typeof getPool>, r: Report) {
 
 async function updateReport(pool: ReturnType<typeof getPool>, r: Report) {
   await pool.query(
-    `UPDATE reports SET revision=$2, stage=$3, review=$4, assignment=$5, outcome=$6, history=$7 WHERE id=$1`,
-    [r.id, r.revision, r.stage, j(r.review), j(r.assignment), j(r.outcome), j(r.history)]
+    `UPDATE reports SET revision=$2, stage=$3, review=$4, assignment=$5, outcome=$6, history=$7, compensation=$8 WHERE id=$1`,
+    [r.id, r.revision, r.stage, j(r.review), j(r.assignment), j(r.outcome), j(r.history), j(r.compensation)]
   );
 }
 

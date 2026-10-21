@@ -3,8 +3,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { GearIcon } from "@/components/GearArt";
 import { isReserved, matchFleet, STAGES, type Command, type OperationsState, emptyState } from "@/lib/operations/model";
 import { RecoveryScene, STEP_KEYS } from "@/components/operations/RecoveryScene";
-import { NewReportForm, NewVesselForm, StepForm } from "@/components/operations/OperationsForms";
+import { RecordCategoryForm, NewReportForm, NewVesselForm, StepForm } from "@/components/operations/OperationsForms";
 import { useLocale, useT, useTf } from "@/lib/i18n/LocaleProvider";
+import { historyText } from "@/lib/i18n/history";
 import { translateReason } from "@/lib/i18n/reasons";
 const money = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "KRW", maximumFractionDigits: 0 }).format(n);
 const EXPLAIN_KEYS = ["studio.explain.0", "studio.explain.1", "studio.explain.2", "studio.explain.3", "studio.explain.4", "studio.explain.5"];
@@ -172,7 +173,7 @@ function AdminOperationsPanel({ t, tf, dateLocale }: { t: (k: string) => string;
               <div><h3>{t("studio.log.title")}</h3><span>{t("studio.log.operator")}</span></div>
               <ol>
                 {report.history.slice().reverse().map((entry, i) => (
-                  <li key={`${entry.at}-${i}`}><time>{new Date(entry.at).toLocaleString(dateLocale)}</time><p>{entry.text}<small>{entry.actor}</small></p></li>
+                  <li key={`${entry.at}-${i}`}><time>{new Date(entry.at).toLocaleString(dateLocale)}</time><p>{historyText(entry.text,dateLocale === "ko-KR" ? "ko" : "en")}<small>{entry.actor}</small></p></li>
                 ))}
               </ol>
             </section>
@@ -241,12 +242,20 @@ function AdminOperationsPanel({ t, tf, dateLocale }: { t: (k: string) => string;
                   <p>{report.outcome.note}</p>
                 </div>
               )}
-              {index < 5 && (index === 1 ? (
+              {report.compensation && (
+                <div className={`outcome-slip compensation-slip status-${report.compensation.status.toLowerCase()}`}>
+                  <span>{t(`opsForm.compensation.${report.compensation.status.toLowerCase()}`)}</span>
+                  <strong>{money(report.compensation.amountKrw)}</strong>
+                  <p>{report.compensation.note}</p>
+                </div>
+              )}
+              {index < 5 ? (index === 1 ? (
                 <details className="review-details"><summary>{t("studio.reviewSummary")}</summary><StepForm report={report} send={send} actor={actor} busy={busy} /></details>
               ) : (
                 <StepForm report={report} send={send} actor={actor} busy={busy} />
-              ))}
+              )) : (report.outcome && report.outcome.result !== "Failed" && <StepForm report={report} send={send} actor={actor} busy={busy} />)}
               {index === 2 && <button className="text-button" disabled={busy || !actor.trim()} onClick={() => void send({ action: "release", id: report.id, revision: report.revision, actor, values: {} })}>{t("studio.release")}</button>}
+              {index === 5 && report.outcome && <RecordCategoryForm report={report} send={send} actor={actor} busy={busy}/> }
               {index === 5 && <p className="studio-hint">{t("studio.closedHint")} {report.outcome?.result === "Failed" ? t("studio.closedHint.newReport") : tf("studio.closedHint.destination", { destination: report.outcome?.disposition ?? "" })}</p>}
             </>
           )}

@@ -2,6 +2,11 @@ export const STAGES = ["REPORTED", "REVIEWED", "ASSIGNED", "UNDERWAY", "RETURNED
 export type Stage = (typeof STAGES)[number];
 export type Gear = "NET" | "TRAP" | "ROPE" | "OTHER";
 export type Outcome = "Recovered" | "Partial" | "Failed";
+export type CompensationStatus = "REQUESTED" | "APPROVED" | "PAID";
+export type Compensation = {
+  rateKrwPerKg: number; amountKrw: number; status: CompensationStatus;
+  note: string; recordedBy: string; recordedAt: string;
+};
 export type Vessel = {
   id: string; name: string; lat: number; lon: number; maxDepth: number;
   maxWave: number; gear: Gear[]; speed: number; hourlyCost: number;
@@ -14,7 +19,8 @@ export type Report = {
   photoDataUrl?: string;
   review?: { depth: number; wave: number; budget: number; radius: number; hours: number; note: string; reviewer: string };
   assignment?: { vesselId: string; vesselName: string; distance: number; estimatedCost: number; estimatedHours: number };
-  outcome?: { result: Outcome; weight: number; actualCost: number; evidence: string; note: string; disposition: string };
+  outcome?: { recordKind?: "FIELD" | "EXERCISE"; result: Outcome; weight: number; actualCost: number; evidence: string; note: string; disposition: string };
+  compensation?: Compensation;
   history: LogEntry[];
 };
 export type OperationsState = { schema: 1; reports: Report[]; vessels: Vessel[] };
@@ -23,7 +29,7 @@ export class WorkflowError extends Error {
   constructor(message: string, public status = 400) { super(message); }
 }
 export type Command = {
-  action: "createReport" | "createVessel" | "availability" | "review" | "assign" | "release" | "start" | "outcome" | "close";
+  action: "createReport" | "createVessel" | "availability" | "review" | "assign" | "release" | "start" | "outcome" | "close" | "compensation" | "classifyRecord";
   id?: string; revision?: number; actor?: string; values: Record<string, unknown>;
 };
 const GEARS: Gear[] = ["NET", "TRAP", "ROPE", "OTHER"];
@@ -136,6 +142,27 @@ export function applyCommand(state: OperationsState, raw: unknown, context: { no
     case "close":
       requireStage("RETURNED");checked(v.evidenceChecked,"Confirm that the evidence reference and outcome have been checked.");
       report.stage="CLOSED";message=report.outcome?.result==="Failed"?"Attempt closed without recovery. Re-survey or a new report may be needed.":"Evidence review recorded. Recovery record closed.";break;
+    case "classifyRecord": {
+      requireStage("CLOSED");
+      if (!report.outcome) throw new WorkflowError("Outcome required.");
+      if (v.recordKind !== "FIELD" && v.recordKind !== "EXERCISE") throw new WorkflowError("Choose a record category.");
+      checked(v.confirmed,"Confirm the evidence and record category.");
+      const note=text(v.note,"Record category note",2000);
+      report.outcome.recordKind=v.recordKind;
+      message=`Record category: ${v.recordKind}. ${note}`;
+      break;
+    }
+    case "compensation": {
+      requireStage("CLOSED");
+      if (!report.outcome || report.outcome.result === "Failed") throw new WorkflowError("No recovered material to request compensation for.");
+      const rateKrwPerKg=number(v.rateKrwPerKg,"Rate per kg (KRW)",0,1000000);
+      const status=String(v.status);
+      if (!["REQUESTED","APPROVED","PAID"].includes(status)) throw new WorkflowError("Choose a compensation status.");
+      const amountKrw=Math.round(report.outcome.weight*rateKrwPerKg);
+      report.compensation={rateKrwPerKg,amountKrw,status:status as CompensationStatus,note:text(v.note,"Compensation note",2000),recordedBy:actor,recordedAt:context.now};
+      message=status==="REQUESTED"?`Compensation requested: ₩${amountKrw.toLocaleString()} (${report.outcome.weight} kg × ₩${rateKrwPerKg.toLocaleString()}/kg).`:status==="APPROVED"?`Compensation approved: ₩${amountKrw.toLocaleString()}.`:`Compensation paid: ₩${amountKrw.toLocaleString()}.`;
+      break;
+    }
     default:throw new WorkflowError("Unsupported action.");
   }
   report.revision++;report.history.push(event(message));return next;
@@ -159,4 +186,9 @@ export function nextDemoCommand(report: Report, state:OperationsState, rough:boo
     case "RETURNED":return {...base,action:"close",values:{evidenceChecked:true}};
     default:return null;
   }
+}
+
+// Only explicitly checked field records enter impact statistics. Legacy records stay reviewable.
+export function isFieldRecovery(report: Report): boolean {
+ return report.stage === "CLOSED" && report.outcome?.recordKind === "FIELD" && report.outcome.result !== "Failed" && report.outcome.weight > 0;
 }

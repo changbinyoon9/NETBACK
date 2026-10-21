@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Brand } from "@/components/Brand";
+import { FieldStory } from "@/components/home/FieldStory";
+import { ServiceAccess } from "@/components/ServiceAccess";
 import { HeroMap } from "@/components/HeroMap";
 import { FishingNet, GearIcon, RecoveryRoute } from "@/components/GearArt";
 import { useT } from "@/lib/i18n/LocaleProvider";
@@ -65,7 +67,7 @@ export default function Home() {
               {t("home.intro.line2")}
             </p>
             <div className="dock-actions">
-              <Link href="/lab" className="dock-button">
+              <Link href="/report" className="dock-button">
                 {t("home.cta.lab")} <span aria-hidden="true">↗</span>
               </Link>
               <Link href="#the-connection" className="dock-text-link">
@@ -116,6 +118,7 @@ export default function Home() {
           </div>
         </section>
 
+        <ServiceAccess />
         <div className="rope-divider" aria-hidden="true">
           <span>{t("home.rope.find").toUpperCase()}</span>
           <GearIcon kind="buoy" />
@@ -154,6 +157,7 @@ export default function Home() {
           </div>
         </section>
 
+        <FieldStory />
         <section className="fieldbook-section">
           <div className="fieldbook-copy">
             <p className="dock-kicker">{t("home.s2.kicker").toUpperCase()}</p>
@@ -165,7 +169,7 @@ export default function Home() {
               <span className="outlined-word">{t("home.s2.title.line3")}</span>
             </h2>
             <p>{t("home.s2.body")}</p>
-            <Link href="/lab" className="dock-button">
+            <Link href="/lab/planner" className="dock-button">
               {t("home.s2.cta")} <span aria-hidden="true">↗</span>
             </Link>
             <div className="fieldbook-disclaimer">
@@ -210,7 +214,7 @@ export default function Home() {
               {t("home.s3.title.line2")} <span>{t("home.s3.title.line3")}</span>
             </h2>
             <div className="all-hands-actions">
-              <Link href="/lab" className="dock-button">
+              <Link href="/report" className="dock-button">
                 {t("home.s3.cta1")} <span aria-hidden="true">↗</span>
               </Link>
               <Link href="/how-it-works" className="dock-text-link">
@@ -234,7 +238,7 @@ export default function Home() {
           <p>
             <Lines text={t("home.footer.tagline")} />
           </p>
-          <Link href="/lab">{t("home.footer.explore")} ↗</Link>
+          <Link href="/report/status">{t("home.footer.explore")} ↗</Link>
         </div>
         <div className="footer-wordmark" aria-hidden="true">
           NETBACK<span>↗</span>
