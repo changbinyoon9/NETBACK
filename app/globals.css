@@ -269,7 +269,7 @@ h1 em,h2 em {font-family:Georgia,"Times New Roman",serif;font-weight:400;}
 .dock-scene{position:relative;min-height:660px;background:#bfd2c4;margin-left:28px;overflow:hidden}
 .scene-grid{position:absolute;inset:0;background-image:linear-gradient(#173d3510 1px,transparent 1px),linear-gradient(90deg,#173d3510 1px,transparent 1px);background-size:42px 42px}
 .sea-photo{position:absolute;top:120px;left:12%;right:-9%;height:465px;border-radius:48% 42% 0 48%;transform:rotate(-9deg);overflow:hidden;border:7px solid #f6f3e8;box-shadow:0 0 0 1px #173d35}
-.sea-photo img{object-position:40% center;transform:rotate(9deg) scale(1.18);filter:saturate(.76)}
+.sea-photo img,.sea-photo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% center;transform:rotate(9deg) scale(1.18);filter:saturate(.76)}
 .fishing-net-art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible}
 .net-sway{transform-origin:80% 0;animation:net-drift 12s ease-in-out infinite alternate}
 .gear-tag{position:absolute;bottom:71px;left:4%;z-index:4;display:flex;align-items:center;gap:16px;padding:18px 21px 18px 14px;background:#f6f3e8;border:1px solid #173d35;box-shadow:4px 5px 0 #173d352e;transform:rotate(-8deg);font-family:monospace;font-size:10px;letter-spacing:1px;line-height:1.8}

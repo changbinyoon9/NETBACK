@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Brand } from "@/components/Brand";
 import { FieldStory } from "@/components/home/FieldStory";
@@ -82,14 +81,9 @@ export default function Home() {
           <div className="dock-scene">
             <div className="scene-grid" />
             <div className="sea-photo">
-              <Image
-                src="/images/recovery-noaa.jpg"
-                alt="A diver working to remove abandoned fishing gear from a reef"
-                fill
-                priority
-                sizes="(max-width: 800px) 95vw, 50vw"
-                className="object-cover"
-              />
+              <video autoPlay muted loop playsInline poster="/videos/story/poster.jpg" aria-hidden="true">
+                <source src="/videos/story/arc-saver-dive.mp4" type="video/mp4" />
+              </video>
             </div>
             <FishingNet />
             <div className="gear-tag">
