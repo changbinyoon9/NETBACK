@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { LiveAnalysisResult } from "@/lib/types";
 import { fmtScore } from "@/lib/format";
 import { EngineTrace, type EngineStep } from "@/components/EngineTrace";
+import { EngineStepIcon } from "@/components/EngineStepIcons";
 import { ExplainToggle } from "@/components/ExplainToggle";
 import { PriorityBadge } from "@/components/Badges";
 import { EvidenceBadge } from "@/components/EvidenceBadge";
@@ -94,7 +95,7 @@ export function StepPrioritizeCustom({
   const steps: EngineStep[] = [
     {
       id: "gear",
-      icon: "◈",
+      icon: <EngineStepIcon kind="gear" />,
       label: t("prio.gearHazardPrior"),
       value: scored ? fmtScore(env.gearHazardPrior) : t("prio.notScored"),
       skipped: !scored,
@@ -102,7 +103,7 @@ export function StepPrioritizeCustom({
     },
     {
       id: "mpa",
-      icon: "▲",
+      icon: <EngineStepIcon kind="mpa" />,
       label: t("prio.mpaProximityScore"),
       formula: "0.10 + 0.90 × exp(-distance_km / 5)",
       value: scored ? fmtScore(env.mpaProximityScore) : "—",
@@ -111,7 +112,7 @@ export function StepPrioritizeCustom({
     },
     {
       id: "env",
-      icon: "∑",
+      icon: <EngineStepIcon kind="env" />,
       label: t("prio.envPriority"),
       formula: "0.6 × gear_hazard + 0.4 × mpa_proximity",
       value: scored ? fmtScore(env.environmentalPriority) : t("prio.notScored"),
@@ -120,7 +121,7 @@ export function StepPrioritizeCustom({
     },
     {
       id: "depth",
-      icon: "≈",
+      icon: <EngineStepIcon kind="depth" />,
       label: t("prio.bathyRecoverability"),
       formula: "exp(-depth_m / 200)",
       inputs: [{ label: t("prio.depthProxy"), value: `${result.bathymetry.depthM} m` }],
@@ -129,7 +130,7 @@ export function StepPrioritizeCustom({
     },
     {
       id: "final",
-      icon: "★",
+      icon: <EngineStepIcon kind="final" />,
       label: t("prio.preliminaryPriority"),
       formula: "environmental_priority × depth_recoverability",
       value: preliminaryPriority !== null ? fmtScore(preliminaryPriority) : t("prio.notScored"),

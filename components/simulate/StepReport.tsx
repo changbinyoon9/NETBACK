@@ -26,7 +26,7 @@ export function StepReport({
           <Field label={t("report.photo")} value={t("report.photoValue")} />
           <Field
             label={t("report.location")}
-            value={`${job.lat.toFixed(5)}, ${job.lon.toFixed(5)} · ${job.region}`}
+            value={`${job.lat.toFixed(5)}, ${job.lon.toFixed(5)}, ${job.region}`}
           />
           <Field label={t("report.material")} value={job.materialRaw} />
           <Field

@@ -41,7 +41,7 @@ export function StepComplete({ job, mission }: { job: MissionSubject; mission: M
         {mission.recoveryResult === "Failed" ? t("complete.failedTitle") : t("complete.title")}
       </h2>
       <p className="mt-1 text-sm text-ink-soft">
-        {mission.missionId} · {job.jobId} · {job.materialRaw}
+        {mission.missionId}, {job.jobId}, {job.materialRaw}
       </p>
 
       <p className="mt-3 text-sm text-ink-soft">

@@ -19,16 +19,14 @@ export default function HowItWorks() {
           <h1 className="mt-2 text-3xl font-bold text-navy">{t("how.title")}</h1>
           <p className="mt-3 text-ink-soft">{t("how.intro")}</p>
 
-          <ol className="mt-10 space-y-6">
+          <ol className="relative mt-12 border-l border-border pl-8">
             {STEP_KEYS.map((key, i) => (
-              <li key={key} className="flex gap-4 rounded-xl border border-border bg-white p-5 shadow-sm">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy text-sm font-bold text-white">
+              <li key={key} className={i < STEP_KEYS.length - 1 ? "pb-10" : ""}>
+                <span className="absolute -left-[15px] flex h-[29px] w-[29px] items-center justify-center rounded-full border-2 border-navy bg-offwhite font-mono text-xs font-bold text-navy">
                   {i + 1}
-                </div>
-                <div>
-                  <h2 className="font-semibold text-navy">{t(`how.step.${key}.title`)}</h2>
-                  <p className="mt-1 text-sm text-ink-soft">{t(`how.step.${key}.body`)}</p>
-                </div>
+                </span>
+                <h2 className="font-semibold text-navy">{t(`how.step.${key}.title`)}</h2>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{t(`how.step.${key}.body`)}</p>
               </li>
             ))}
           </ol>

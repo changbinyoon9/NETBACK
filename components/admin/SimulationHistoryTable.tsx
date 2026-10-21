@@ -40,7 +40,7 @@ export function SimulationHistoryTable() {
                 <StatusBadge status={m.status} />
                 <span className="mt-1 block text-xs text-ink-soft">
                   {m.recoveryResult ?? t("common.pending")}
-                  {m.recoveredWeightKg !== undefined ? ` · ${m.recoveredWeightKg} kg (sim.)` : ""}
+                  {m.recoveredWeightKg !== undefined ? `, ${m.recoveredWeightKg} kg (sim.)` : ""}
                 </span>
               </td>
               <td className="px-4 py-2.5 font-mono">{fmtScore(m.finalPriority)}</td>

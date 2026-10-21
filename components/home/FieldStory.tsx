@@ -29,20 +29,18 @@ export function FieldStory() {
     <section className="field-story-section">
       <div className="field-story-intro">
         <p className="dock-kicker">{t("story.kicker").toUpperCase()}</p>
-        <h2>
-          {t("story.title.line1")}
-          <br />
-          <span className="outlined-word">{t("story.title.line2")}</span>
-        </h2>
+        <h2>{t("story.title")}</h2>
+        <p className="field-story-lead">{t("story.lead")}</p>
         <p>{t("story.body1")}</p>
         <p>{t("story.body2")}</p>
+        <p>{t("story.body3")}</p>
+        <p>{t("story.body4")}</p>
       </div>
 
       <div className="field-story-feature">
         <div className="field-story-feature-media">
           <Image key={feature.src} src={feature.src} alt={locale === "ko" ? feature.alt.ko : feature.alt.en} fill sizes="(max-width: 800px) 90vw, 45vw" className="object-cover" priority />
         </div>
-        <p className="field-story-feature-caption">{locale === "ko" ? feature.alt.ko : feature.alt.en}</p>
       </div>
 
       <div className="field-story-gallery">

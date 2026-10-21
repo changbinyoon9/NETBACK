@@ -68,7 +68,7 @@ export function JobTable({
               <td className="px-4 py-2.5 font-mono">{j.candidateVesselCount}</td>
               <td className="px-4 py-2.5 font-mono">
                 {j.bestVesselDistanceKm !== null
-                  ? `${fmtKm(j.bestVesselDistanceKm)} · ${fmtTonnage(j.bestVesselTonnage)}`
+                  ? `${fmtKm(j.bestVesselDistanceKm)}, ${fmtTonnage(j.bestVesselTonnage)}`
                   : "—"}
               </td>
               <td className="px-4 py-2.5 font-mono font-semibold">{fmtScore(j.finalPriority)}</td>

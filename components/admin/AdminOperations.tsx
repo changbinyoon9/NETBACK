@@ -12,51 +12,6 @@ const EXPLAIN_KEYS = ["studio.explain.0", "studio.explain.1", "studio.explain.2"
 
 export function AdminOperations() {
   const t = useT(); const tf = useTf(); const { locale } = useLocale(); const dateLocale = locale === "ko" ? "ko-KR" : "en-GB";
-  const [authChecked, setAuthChecked] = useState(false);
-  const [authed, setAuthed] = useState(false);
-  const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
-  const [loginBusy, setLoginBusy] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/admin/session").then((r) => r.json()).then((d) => setAuthed(!!d.authed)).catch(() => setAuthed(false)).finally(() => setAuthChecked(true));
-  }, []);
-
-  async function login(e: React.FormEvent) {
-    e.preventDefault();
-    setLoginBusy(true); setLoginError("");
-    try {
-      const res = await fetch("/api/admin/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) });
-      if (!res.ok) { setLoginError(t("adminOps.login.error")); return; }
-      setAuthed(true);
-    } finally {
-      setLoginBusy(false);
-    }
-  }
-
-  if (!authChecked) return <div className="admin-ops-gate">{t("adminOps.checking")}</div>;
-
-  if (!authed) {
-    return (
-      <div className="admin-ops-gate">
-        <form className="studio-form admin-login" onSubmit={login}>
-          <h2>{t("adminOps.login.title")}</h2>
-          <p className="admin-login-body">{t("adminOps.login.body")}</p>
-          <label className="studio-field">
-            <span>{t("adminOps.login.password")}</span>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoFocus />
-          </label>
-          {loginError && <p className="studio-error">{loginError}</p>}
-          <button className="studio-primary" disabled={loginBusy || !password}>{t("adminOps.login.submit")}</button>
-        </form>
-      </div>
-    );
-  }
-
-  return <AdminOperationsPanel t={t} tf={tf} dateLocale={dateLocale} />;
-}
-
-function AdminOperationsPanel({ t, tf, dateLocale }: { t: (k: string) => string; tf: (k: string, v: Record<string, string | number>) => string; dateLocale: string }) {
   const [operations, setOperations] = useState<OperationsState>(emptyState);
   const [loaded, setLoaded] = useState(false);
   const [selected, setSelected] = useState("");
@@ -217,8 +172,8 @@ function AdminOperationsPanel({ t, tf, dateLocale }: { t: (k: string) => string;
                         <GearIcon kind="vessel" width={40} />
                         <div>
                           <strong>{m.vessel.name}</strong>
-                          <small>{m.distance.toFixed(1)} km · {money(m.cost)}</small>
-                          <p>{m.eligible ? tf("studio.match.within", { hours: m.hours.toFixed(1) }) : m.reasons.map((r) => translateReason(t, r)).join(" · ")}</p>
+                          <small>{m.distance.toFixed(1)} km, {money(m.cost)}</small>
+                          <p>{m.eligible ? tf("studio.match.within", { hours: m.hours.toFixed(1) }) : m.reasons.map((r) => translateReason(t, r)).join(", ")}</p>
                           {m.eligible && <button disabled={busy || !actor.trim()} onClick={() => void send({ action: "assign", actor, id: report.id, revision: report.revision, values: { vesselId: m.vessel.id } })}>{t("studio.match.reserve")}</button>}
                         </div>
                       </div>
@@ -282,7 +237,7 @@ function AdminOperationsPanel({ t, tf, dateLocale }: { t: (k: string) => string;
                     <GearIcon kind="vessel" width={48} />
                     <div>
                       <strong>{v.name}</strong>
-                      <p>{v.gear.join(", ")} · {tf("studio.drawer.depthWave", { depth: v.maxDepth, wave: v.maxWave })}</p>
+                      <p>{v.gear.join(", ")}, {tf("studio.drawer.depthWave", { depth: v.maxDepth, wave: v.maxWave })}</p>
                       <small>{tf("studio.drawer.updated", { date: new Date(v.updatedAt).toLocaleString(dateLocale) })}</small>
                       <button disabled={busy || !actor.trim() || isReserved(operations, v.id)} onClick={() => void send({ action: "availability", id: v.id, actor, values: { available: !v.available } })}>
                         {isReserved(operations, v.id) ? t("studio.drawer.reserved") : v.available ? t("studio.drawer.markUnavailable") : t("studio.drawer.markAvailable")}

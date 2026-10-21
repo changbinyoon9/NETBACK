@@ -10,6 +10,7 @@ import {
 } from "@/lib/engine";
 import { fmtScore } from "@/lib/format";
 import { EngineTrace, type EngineStep } from "@/components/EngineTrace";
+import { EngineStepIcon } from "@/components/EngineStepIcons";
 import { ExplainToggle } from "@/components/ExplainToggle";
 import { PriorityBadge } from "@/components/Badges";
 import { EvidenceBadge } from "@/components/EvidenceBadge";
@@ -56,7 +57,7 @@ export function StepPrioritize({
   const steps: EngineStep[] = [
     {
       id: "gear",
-      icon: "◈",
+      icon: <EngineStepIcon kind="gear" />,
       label: t("prio.gearHazardPrior"),
       value: env.scored ? fmtScore(env.gearHazardPrior) : t("prio.notScored"),
       skipped: !env.scored,
@@ -64,7 +65,7 @@ export function StepPrioritize({
     },
     {
       id: "mpa",
-      icon: "▲",
+      icon: <EngineStepIcon kind="mpa" />,
       label: t("prio.mpaProximityScore"),
       formula: "0.10 + 0.90 × exp(-distance_km / 5)",
       value: env.scored ? fmtScore(env.mpaProximityScore) : "—",
@@ -72,7 +73,7 @@ export function StepPrioritize({
     },
     {
       id: "env",
-      icon: "∑",
+      icon: <EngineStepIcon kind="env" />,
       label: t("prio.envPriority"),
       formula: "0.6 × gear_hazard + 0.4 × mpa_proximity",
       value: env.scored ? fmtScore(env.environmentalPriority) : t("prio.notScored"),
@@ -81,7 +82,7 @@ export function StepPrioritize({
     },
     {
       id: "depth",
-      icon: "≈",
+      icon: <EngineStepIcon kind="depth" />,
       label: t("prio.bathyRecoverability"),
       formula: "exp(-depth_m / 200)",
       inputs: [{ label: t("prio.depthProxy"), value: `${job.bathymetricDepthM ?? "—"} m` }],
@@ -90,7 +91,7 @@ export function StepPrioritize({
     },
     {
       id: "final",
-      icon: "★",
+      icon: <EngineStepIcon kind="final" />,
       label: t("prio.preliminaryPriority"),
       formula: "environmental_priority × depth_recoverability",
       value: prelim.preliminaryPriority !== null ? fmtScore(prelim.preliminaryPriority) : t("prio.notScored"),

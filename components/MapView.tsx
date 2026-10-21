@@ -163,7 +163,7 @@ export function MapView({
             }}
           >
             <Tooltip direction="top" offset={[0, -6]}>
-              {focusJob.jobId} · {focusJob.materialRaw}
+              {focusJob.jobId}, {focusJob.materialRaw}
             </Tooltip>
           </CircleMarker>
         )}
@@ -194,7 +194,7 @@ export function MapView({
             eventHandlers={onJobClick ? { click: () => onJobClick(j.jobId) } : undefined}
           >
             <Tooltip direction="top" offset={[0, -4]}>
-              {j.jobId} · {j.materialRaw}
+              {j.jobId}, {j.materialRaw}
             </Tooltip>
           </CircleMarker>
         ))}

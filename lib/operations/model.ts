@@ -171,9 +171,9 @@ export function applyCommand(state: OperationsState, raw: unknown, context: { no
 export function demoState(rough = false): OperationsState {
   const now="2026-01-01T09:00:00.000Z";
   return { schema:1, reports:[{id:"TEST-001",revision:1,title:"A net near the reef",lat:34.83583,lon:128.43333,gear:"NET",notes:"Fictional training report at a historical study coordinate. No current incident is implied.",reportedAt:now,stage:"REPORTED",history:[{at:now,text:rough?"Training signal received. Rough water is expected.":"Training signal received. A lost net needs a way home.",actor:"Test scenario"}]}],vessels:[
-    {id:"TEST-V1",name:"Tidekeeper · demo",lat:34.82,lon:128.42,maxDepth:80,maxWave:1.5,gear:["NET","ROPE"],speed:9,hourlyCost:180000,available:true,updatedAt:now},
-    {id:"TEST-V2",name:"Blue Knot · demo",lat:34.86,lon:128.47,maxDepth:150,maxWave:2,gear:["NET","TRAP","ROPE"],speed:8,hourlyCost:240000,available:true,updatedAt:now},
-    {id:"TEST-V3",name:"Little Buoy · demo",lat:34.83,lon:128.43,maxDepth:15,maxWave:1,gear:["TRAP"],speed:6,hourlyCost:100000,available:true,updatedAt:now}
+    {id:"TEST-V1",name:"Tidekeeper / demo",lat:34.82,lon:128.42,maxDepth:80,maxWave:1.5,gear:["NET","ROPE"],speed:9,hourlyCost:180000,available:true,updatedAt:now},
+    {id:"TEST-V2",name:"Blue Knot / demo",lat:34.86,lon:128.47,maxDepth:150,maxWave:2,gear:["NET","TRAP","ROPE"],speed:8,hourlyCost:240000,available:true,updatedAt:now},
+    {id:"TEST-V3",name:"Little Buoy / demo",lat:34.83,lon:128.43,maxDepth:15,maxWave:1,gear:["TRAP"],speed:6,hourlyCost:100000,available:true,updatedAt:now}
   ]};
 }
 export function nextDemoCommand(report: Report, state:OperationsState, rough:boolean, outcome:Outcome): Command | null {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useT } from "@/lib/i18n/LocaleProvider";
 
 export interface EngineStepInput {
@@ -10,7 +10,7 @@ export interface EngineStepInput {
 
 export interface EngineStep {
   id: string;
-  icon: string;
+  icon: ReactNode;
   label: string;
   formula?: string;
   inputs?: EngineStepInput[];

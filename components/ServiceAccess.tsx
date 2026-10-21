@@ -7,7 +7,7 @@ import { GearIcon } from "./GearArt";
 export function ServiceAccess(){
  const t=useT();const router=useRouter();const [id,setId]=useState("");
  return <section className="service-access" aria-labelledby="service-access-title">
-  <div className="service-access-heading"><p className="dock-kicker">NETBACK SERVICE</p><h2 id="service-access-title">{t("service.title")}</h2><p>{t("service.intro")}</p></div>
+  <div className="service-access-heading"><p className="dock-kicker">NETBACK SERVICE</p><h2 id="service-access-title">{t("service.title")}</h2></div>
   <div className="service-links">{([
    ["report","/report","buoy"],["plan","/lab/planner","vessel"],["guide","/how-it-works","knot"]
   ] as const).map(([key,href,kind],i)=><Link href={href} key={key}><span className="service-number">0{i+1}</span><GearIcon kind={kind} width={56}/><h3>{t(`service.${key}.title`)}</h3><p>{t(`service.${key}.body`)}</p><span className="service-arrow" aria-hidden="true">↗</span></Link>)}</div>

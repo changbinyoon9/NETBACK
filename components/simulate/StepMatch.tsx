@@ -166,7 +166,7 @@ export function StepMatch({
               <div>
                 <p className="text-xs font-bold tracking-wide text-emerald-600 uppercase">{t("match.bestMatch")}</p>
                 <p className="mt-1 font-mono text-sm text-ink-soft">
-                  {best.vesselId} · {fmtKm(best.distanceKm)} {t("match.away")} · {fmtTonnage(best.vesselTonnage)}
+                  {best.vesselId}, {fmtKm(best.distanceKm)} {t("match.away")}, {fmtTonnage(best.vesselTonnage)}
                 </p>
               </div>
               {!missionCreated ? (

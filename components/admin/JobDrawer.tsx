@@ -58,7 +58,7 @@ export function JobDrawer({
             <div>
               <Label>{t("drawer.material")}</Label>
               <p className="text-ink">{job.materialRaw}</p>
-              <p className="mt-0.5 text-xs text-slate-400">{job.region} · {job.branch} · {job.recoveryDate}</p>
+              <p className="mt-0.5 text-xs text-slate-400">{job.region}, {job.branch}, {job.recoveryDate}</p>
             </div>
             <ResearchModeToggle />
           </div>
@@ -156,7 +156,7 @@ export function JobDrawer({
               <ul className="mt-3 space-y-1.5 text-xs">
                 {ranked.slice(0, 5).map((c, i) => (
                   <li key={c.vesselId} className="flex justify-between rounded bg-slate-50 px-2 py-1.5 font-mono">
-                    <span>#{i + 1} {fmtKm(c.distanceKm)} · {fmtTonnage(c.vesselTonnage)}</span>
+                    <span>#{i + 1} {fmtKm(c.distanceKm)}, {fmtTonnage(c.vesselTonnage)}</span>
                     <span className="font-semibold">{fmtScore(c.vesselSuitabilityScore)}</span>
                   </li>
                 ))}
